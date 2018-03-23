@@ -7,22 +7,18 @@ class Pokemon
     protected $hitPoints;
     protected $health;
     protected $attacks;
-    protected $weakness;
-    protected $weaknessMultiplier;
-    protected $resistance;
-    protected $resistanceValue;
+    protected $weaknesses;
+    protected $resistances;
 
-    function __construct($name, $energyType, $hitPoints, $attacks, $weakness, $weaknessMultiplier, $resistance, $resistanceValue)
+    function __construct($name, EnergyType $energyType, $hitPoints, array $attacks, array $weaknesses, array $resistances)
     {
         $this->name = $name;
         $this->energyType = $energyType;
         $this->hitPoints = $hitPoints;
         $this->health = $hitPoints;
         $this->attacks = $attacks;
-        $this->weakness = $weakness;
-        $this->weaknessMultiplier = $weaknessMultiplier;
-        $this->resistance = $resistance;
-        $this->resistanceValue = $resistanceValue;
+        $this->weaknesses = $weaknesses;
+        $this->resistances = $resistances;
     }
 
     function __toString()
@@ -82,41 +78,56 @@ class Pokemon
 
     public function getWeakness()
     {
-        return $this->weakness;
+        return $this->weaknesses;
     }
 
-    public function setWeakness($weakness)
+    public function setWeakness($weaknesses)
     {
-        $this->weakness = $weakness;
+        $this->weaknesses = $weaknesses;
     }
 
-    public function getWeaknessMultiplier()
+    public function getresistances()
     {
-        return $this->weaknessMultiplier;
+        return $this->resistances;
     }
 
-    public function setWeaknessMultiplier($weaknessMultiplier)
+    public function setresistances($resistances)
     {
-        $this->weaknessMultiplier = $weaknessMultiplier;
+        $this->resistances = $resistances;
     }
 
-    public function getResistance()
+    public function doAttack(Attack $attack, Pokemon $pokemon)
     {
-        return $this->resistance;
+        if (!in_array($attack, $this->attacks)) {
+            // Pokemon can't do this attack.
+            return false;
+        }
+
+        $pokemon->underAttack($attack, $this->energyType);
+
+        return true;
     }
 
-    public function setResistance($resistance)
+    public function underAttack(Attack $attack, energyType $energyTypeAttacker)
     {
-        $this->resistance = $resistance;
-    }
+        $attackDamageLeft = $attack->getDamage(); //
 
-    public function getResistanceValue()
-    {
-        return $this->resistanceValue;
-    }
+        if (in_array($energyTypeAttacker, $this->resistances)) { // Check if this pokemon has a resistance for the attack.
+            $resistancesId =  array_search($energyTypeAttacker, $this->resistances); // Get the ID of the array
+            $resistance = $this->resistances[$resistancesId];
 
-    public function setResistanceValue($resistanceValue)
-    {
-        $this->resistanceValue = $resistanceValue;
+            $attackDamageLeft = $attackDamageLeft-$resistance->value;
+        }
+
+        if (in_array($energyTypeAttacker, $this->weaknesses)) { // Check if this pokemon has a resistance for the attack.
+            $weaknessesId =  array_search($energyTypeAttacker, $this->weaknesses); // Get the ID of the array
+            $weaknesses = $this->weaknesses[$weaknessesId];
+
+            $attackDamageLeft = $attackDamageLeft*$weaknesses->weaknessMultiplier;
+        }
+
+        $this->health = $this->health-$attackDamageLeft;
+
+        return true;
     }
 }
