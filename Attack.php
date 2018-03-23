@@ -15,4 +15,24 @@ class Attack
     {
         return $this->name;
     }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    public function getDamage()
+    {
+        return $this->damage;
+    }
+
+    public function setDamage($damage)
+    {
+        $this->damage = $damage;
+    }
 }
