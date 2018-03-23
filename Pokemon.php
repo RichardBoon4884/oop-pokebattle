@@ -41,19 +41,9 @@ class Pokemon
         return $this->energyType;
     }
 
-    public function setEnergyType($energyType)
-    {
-        $this->energyType = $energyType;
-    }
-
     public function getHitPoints()
     {
         return $this->hitPoints;
-    }
-
-    public function setHitPoints($hitPoints)
-    {
-        $this->hitPoints = $hitPoints;
     }
 
     public function getHealth()
@@ -61,39 +51,9 @@ class Pokemon
         return $this->health;
     }
 
-    public function setHealth($health)
-    {
-        $this->health = $health;
-    }
-
     public function getAttacks()
     {
         return $this->attacks;
-    }
-
-    public function setAttacks($attacks)
-    {
-        $this->attacks = $attacks;
-    }
-
-    public function getWeakness()
-    {
-        return $this->weaknesses;
-    }
-
-    public function setWeakness($weaknesses)
-    {
-        $this->weaknesses = $weaknesses;
-    }
-
-    public function getresistances()
-    {
-        return $this->resistances;
-    }
-
-    public function setresistances($resistances)
-    {
-        $this->resistances = $resistances;
     }
 
     public function doAttack(Attack $attack, Pokemon $pokemon)
@@ -110,16 +70,16 @@ class Pokemon
 
     public function underAttack(Attack $attack, energyType $energyTypeAttacker)
     {
-        $attackDamageLeft = $attack->getDamage(); //
+        $attackDamageLeft = $attack->getDamage(); // Needed for resistance and weakness
 
-        if (in_array($energyTypeAttacker, $this->resistances)) { // Check if this pokemon has a resistance for the attack.
+        if (in_array($energyTypeAttacker, $this->resistances)) { // Check if this pokemon has a resistance for the attack energy type.
             $resistancesId =  array_search($energyTypeAttacker, $this->resistances); // Get the ID of the array
             $resistance = $this->resistances[$resistancesId];
 
             $attackDamageLeft = $attackDamageLeft-$resistance->value;
         }
 
-        if (in_array($energyTypeAttacker, $this->weaknesses)) { // Check if this pokemon has a resistance for the attack.
+        if (in_array($energyTypeAttacker, $this->weaknesses)) { // Check if this pokemon has a weakness for the attack energy type.
             $weaknessesId =  array_search($energyTypeAttacker, $this->weaknesses); // Get the ID of the array
             $weaknesses = $this->weaknesses[$weaknessesId];
 
