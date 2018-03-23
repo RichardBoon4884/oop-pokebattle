@@ -32,12 +32,12 @@ array_push($pokemons, new \Pokemon('Pikachu', $energyTypes[0], 60, [$attacks[0],
 array_push($pokemons, new \Pokemon('Charmeleon', $energyTypes[1], 60, [$attacks[2], $attacks[3]], [$weaknesses[1]], [$resistances[0]]));
 
 foreach ($pokemons as $pokemon) {
-    var_dump($pokemon->getHealth());
+    print($pokemon . ' health: ' . $pokemon->getHealth() . '<br>');
 }
 
 $pokemons[0]->doAttack($attacks[0], $pokemons[1]);
 $pokemons[1]->doAttack($attacks[3], $pokemons[0]);
 
 foreach ($pokemons as $pokemon) {
-    var_dump($pokemon->getHealth());
+    print($pokemon . ' health: ' . $pokemon->getHealth() . '<br>');
 }
