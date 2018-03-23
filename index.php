@@ -6,38 +6,33 @@ require 'Attack.php';
 require 'Weakness.php';
 require 'Resistances.php';
 
-$energyTypes = [];
-$pokemons = [];
-$attacks = [];
-$weaknesses = [];
-$resistances = [];
+require 'pokemon/Pikachu.php';
+require 'pokemon/Charmeleon.php';
 
-array_push($energyTypes, new \EnergyType('Lightning'));
-array_push($energyTypes, new \EnergyType('Fire'));
-array_push($energyTypes, new \EnergyType('Water'));
-array_push($energyTypes, new \EnergyType('Fighting'));
+require 'energyType/Fighting.php';
+require 'energyType/Fire.php';
+require 'energyType/Lightning.php';
+require 'energyType/Water.php';
 
-array_push($attacks, new \Attack('Electric Ring', 50));
-array_push($attacks, new \Attack('Pika Punch', 20));
-array_push($attacks, new \Attack('Head Butt', 10));
-array_push($attacks, new \Attack('Flare', 30));
+require 'attacks/ElectricRing.php';
+require 'attacks/Flare.php';
+require 'attacks/HeadButt.php';
+require 'attacks/PikaPunch.php';
 
-array_push($weaknesses, new \Weakness($energyTypes[1], 1.5));
-array_push($weaknesses, new \Weakness($energyTypes[2], 2.0));
+require 'resistances/Fighting.php';
+require 'resistances/Lightning.php';
 
-array_push($resistances, new \Resistances($energyTypes[3], 20));
-array_push($resistances, new \Resistances($energyTypes[0], 10));
+require 'weakness/Fire.php';
+require 'weakness/Water.php';
 
-array_push($pokemons, new \Pokemon('Pikachu', $energyTypes[0], 60, [$attacks[0], $attacks[1]], [$weaknesses[0]], [$resistances[0]]));
-array_push($pokemons, new \Pokemon('Charmeleon', $energyTypes[1], 60, [$attacks[2], $attacks[3]], [$weaknesses[1]], [$resistances[0]]));
+$pikachu = new \Pokemon\Pikachu();
+$charmeleon = new \Pokemon\Charmeleon();
 
-foreach ($pokemons as $pokemon) {
-    print($pokemon . ' health: ' . $pokemon->getHealth() . '<br>');
-}
+print($pikachu . ' health: ' . $pikachu->getHealth() . '<br>');
+print($charmeleon . ' health: ' . $charmeleon->getHealth() . '<br>');
 
-$pokemons[0]->doAttack($attacks[0], $pokemons[1]);
-$pokemons[1]->doAttack($attacks[3], $pokemons[0]);
+$pikachu->doAttack(new \Attack\ElectricRing(), $charmeleon);
+$charmeleon->doAttack(new \Attack\Flare(), $pikachu);
 
-foreach ($pokemons as $pokemon) {
-    print($pokemon . ' health: ' . $pokemon->getHealth() . '<br>');
-}
+print($pikachu . ' health: ' . $pikachu->getHealth() . '<br>');
+print($charmeleon . ' health: ' . $charmeleon->getHealth() . '<br>');
