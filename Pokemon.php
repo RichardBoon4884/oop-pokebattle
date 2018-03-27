@@ -63,7 +63,7 @@ class Pokemon
             return false;
         }
 
-        $pokemon->underAttack($attack, $this->energyType);
+        $pokemon->underAttack($attack, $this->energyType); // Attack the other pokemon
 
         return true;
     }
@@ -76,14 +76,14 @@ class Pokemon
             $resistancesId =  array_search($energyTypeAttacker, $this->resistances); // Get the ID of the array
             $resistance = $this->resistances[$resistancesId];
 
-            $attackDamageLeft = $attackDamageLeft-$resistance->value;
+            $attackDamageLeft = $attackDamageLeft-$resistance->value; // Calculate the new attack damage with the resistance.
         }
 
         if (in_array($energyTypeAttacker, $this->weaknesses)) { // Check if this pokemon has a weakness for the attack energy type.
             $weaknessesId =  array_search($energyTypeAttacker, $this->weaknesses); // Get the ID of the array
             $weaknesses = $this->weaknesses[$weaknessesId];
 
-            $attackDamageLeft = $attackDamageLeft*$weaknesses->weaknessMultiplier;
+            $attackDamageLeft = $attackDamageLeft*$weaknesses->weaknessMultiplier; // Calculate the new attack damage with the weakness.
         }
 
         $this->health = $this->health-$attackDamageLeft;

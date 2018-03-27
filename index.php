@@ -28,11 +28,13 @@ require 'weakness/Water.php';
 $pikachu = new \Pokemon\Pikachu();
 $charmeleon = new \Pokemon\Charmeleon();
 
+// Print health of both pikachu's
 print($pikachu . ' health: ' . $pikachu->getHealth() . '<br>');
 print($charmeleon . ' health: ' . $charmeleon->getHealth() . '<br>');
 
 $pikachu->doAttack(new \Attack\ElectricRing(), $charmeleon);
 $charmeleon->doAttack(new \Attack\Flare(), $pikachu);
 
+// Print health of both pikachu's
 print($pikachu . ' health: ' . $pikachu->getHealth() . '<br>');
 print($charmeleon . ' health: ' . $charmeleon->getHealth() . '<br>');
